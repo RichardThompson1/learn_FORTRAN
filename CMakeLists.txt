@@ -1,0 +1,5 @@
+cmake_minimum_required(VERSION 3.10)
+project(demo)
+enable_language(Fortran)
+add_executable(demo main.f90)
+set(CMAKE_Fortran_COMPILER "ifort")
