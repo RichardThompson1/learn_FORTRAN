@@ -8,6 +8,8 @@
 ! end program
 
 program demo
+    use math_functions
+    use point_cartesian
     implicit none
 
     integer :: x, y, z, i, j
@@ -15,6 +17,15 @@ program demo
     integer :: squares(10), small_matrix(2,2)
     integer :: num, unit_1, unit_2, iostat
     logical :: file_exists
+    real :: dist = 0.0
+
+    type(Point) :: p1,p2
+
+    call p1%set_coordinates(0.0, 0.0)
+    call p2%set_coordinates(3.0, pi)
+
+    dist = p1%distance_to(p2)
+    print *, "Distance between p1 and p2: ", dist
 
     x = 3
     y = 7
@@ -24,7 +35,7 @@ program demo
     print *, squares
 
     do i = 1, 10
-        squares(i) = i**2
+        squares(i) = square(i)
     end do
     print *, squares
 
@@ -72,7 +83,7 @@ program demo
             read(unit_1, *, iostat=iostat) num
             if (iostat /= 0) exit   ! Exit the loop if read fails (end of file or error)
 
-            num = num + 2 
+            num = fib(num)
 
             ! Write result to output file
             write(unit_2, '(I10)') num
@@ -84,16 +95,4 @@ program demo
     else
         print *, "Input file does not exist.........................."
     end if
-
-contains
-    pure recursive function fib(n) result(fib_)
-        integer, intent(in) :: n
-        integer :: fib_
-
-        if (n == 1 .or. n == 2) then
-            fib_ = 1
-        else 
-            fib_ = fib(n-1) + fib(n-2)
-        end if
-    end function
 end program 
